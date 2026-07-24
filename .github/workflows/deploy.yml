@@ -70,7 +70,16 @@ jobs:
       - name: Trust remote host key
         run: |
           mkdir -p ~/.ssh
-          ssh-keyscan -p "${SSH_PORT:-22}" "$SSH_HOST" >> ~/.ssh/known_hosts
+          # ssh-keyscan can exit non-zero even after successfully writing
+          # host keys (e.g. it times out on one key algorithm but not
+          # others) — `|| true` stops that from killing the whole job
+          # via the shell's default `set -e`, since what matters is that
+          # known_hosts actually got populated, not this exact exit code.
+          ssh-keyscan -p "${SSH_PORT:-22}" "$SSH_HOST" >> ~/.ssh/known_hosts || true
+          # Fail loudly (instead of silently continuing to a confusing
+          # rsync/ssh error later) only if known_hosts is still empty —
+          # that's the real failure signal, not ssh-keyscan's exit code.
+          test -s ~/.ssh/known_hosts
 
       # --delete removes anything in htdocs that isn't part of the fresh
       # build — this also cleans up any stray source folders (src/,
