@@ -1,0 +1,152 @@
+.comment-section {
+  max-width: var(--site-max-width);
+  margin: 0 auto;
+  padding: 20px 20px 40px;
+}
+
+.comment-section-title {
+  color: var(--color-heading);
+  font-size: 16px;
+  margin: 0 0 14px;
+}
+
+.comment-form {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.comment-form textarea {
+  flex: 1;
+  background: #1a1f2e;
+  border: 1px solid #2a3042;
+  border-radius: 6px;
+  color: #fff;
+  font-size: 13px;
+  padding: 10px 12px;
+  resize: vertical;
+  font-family: inherit;
+}
+
+.comment-form textarea:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+
+.comment-form button {
+  background: var(--color-primary);
+  border: none;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 0 18px;
+  border-radius: 6px;
+  cursor: pointer;
+  align-self: flex-end;
+  height: 38px;
+}
+
+.comment-form button:hover:not(:disabled) {
+  background: var(--color-primary-hover);
+}
+
+.comment-form button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.comment-login-hint {
+  color: #9aa0ac;
+  font-size: 13px;
+  margin-bottom: 16px;
+}
+
+.comment-login-hint a {
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.comment-error {
+  color: #ff8a8a;
+  font-size: 13px;
+  margin: 0 0 12px;
+}
+
+.comment-loading,
+.comment-empty {
+  color: #6c7280;
+  font-size: 13px;
+  padding: 16px 0;
+}
+
+.comment-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.comment-item {
+  display: flex;
+  gap: 10px;
+}
+
+@media (max-width: 480px) {
+  .comment-section {
+    padding: 16px 12px 30px;
+  }
+
+  .comment-form {
+    flex-direction: column;
+  }
+
+  .comment-form button {
+    align-self: stretch;
+  }
+}
+
+.comment-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--color-primary);
+  color: #fff;
+  font-size: 13px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.comment-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.comment-meta {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.comment-author {
+  color: var(--color-heading);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.comment-time {
+  color: #6c7280;
+  font-size: 11px;
+}
+
+.comment-text {
+  color: #cfd3dc;
+  font-size: 13px;
+  margin: 4px 0 0;
+  line-height: 1.5;
+  word-break: break-word;
+}

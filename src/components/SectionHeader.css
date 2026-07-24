@@ -1,0 +1,22 @@
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  max-width: var(--site-max-width);
+  margin: 0 auto;
+  padding: 24px 20px 0;
+}
+
+.section-bar {
+  width: 5px;
+  height: 22px;
+  background: var(--color-primary);
+  border-radius: 2px;
+  display: inline-block;
+}
+
+.section-header h2 {
+  color: #fff;
+  font-size: 20px;
+  margin: 0;
+}

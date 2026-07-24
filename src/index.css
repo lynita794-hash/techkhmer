@@ -1,0 +1,95 @@
+/* Default theme colors. Admins can override these from the Settings page
+   (Custom Color tab) — App.jsx injects a <style> tag that redefines these
+   same variables with the admin's chosen values, which takes priority
+   because it's rendered after this stylesheet. */
+:root {
+  --color-primary: #e50914;
+  --color-primary-hover: #c40810;
+  --color-navbar-bg: #0d0d0d;
+  --color-footer-bg: #0a0a0a;
+  --color-body-bg: #0d0d0d;
+  --color-playlist-btn: #e50914;
+  --color-playlist-btn-hover: #c40810;
+  /* Max width of the centered content area (Navbar, Footer, drama grids,
+     Watch page, ...). Admins can override this from Settings > រូបរាង
+     (Site Width) — App.jsx injects a <style> tag redefining this same
+     variable, which takes priority since it's rendered after this file. */
+  --site-max-width: 1280px;
+  /* Columns-per-row for drama grids on wide/desktop screens only (mobile
+     and tablet keep their fixed 2/3/4-column layout — see DramaGrid.css).
+     Admins can override this from Settings > រូបរាង (ចំនួន Column). */
+  --grid-columns: 6;
+  /* Episode Playlist buttons per row on the Watch page — separate values
+     for Desktop (wide sidebar/no-sidebar layout) and Mobile/Tablet
+     (full-width block below the video). Admins can override both from
+     Settings > រូបរាង (ចំនួន Column Episode). */
+  --episode-columns: 5;
+  --episode-columns-mobile: 6;
+  /* Additional Custom Color fields (Settings > Custom Color): headings,
+     regular body/title text, card/poster placeholder background, and
+     the rating-star accent color. */
+  --color-heading: #ffffff;
+  --color-text: #e5e5e5;
+  --color-card-bg: #1a1a1a;
+  --color-rating: #f7941d;
+  /* Episode Playlist NEW/END badge colors (EpisodeList.css) — admin-
+     configurable from Admin Panel > Playlist. */
+  --color-new-badge: #22c55e;
+  --color-end-badge: #6c7280;
+  /* Site-wide fonts — Arial handles Latin/English, with Battambang/Khmer
+     OS as fallbacks for Khmer glyphs. Admins can pick separate Google
+     Fonts per area from Settings > រូបរាង (Font): Khmer text, English
+     text, Navbar Menu links, and Headings/Titles. App.jsx prepends the
+     admin's picks to these same fallback stacks so any glyph a chosen
+     font is missing still renders correctly. */
+  --font-family: Arial, 'Battambang', 'Khmer OS', Helvetica, sans-serif;
+  --font-family-menu: Arial, 'Battambang', 'Khmer OS', Helvetica, sans-serif;
+  --font-family-title: Arial, 'Battambang', 'Khmer OS', Helvetica, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  /* Prevent any single wide element (e.g. a table, long unbroken string,
+     or a fixed-width component) from creating horizontal page scroll on
+     small screens — this is the most common cause of "squished" mobile
+     layouts, where the viewport ends up wider than the device width. */
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  background: var(--color-body-bg);
+  color: var(--color-text);
+  font-family: var(--font-family);
+}
+
+/* Headings/titles use their own Google Font pick (Settings > រូបរាង >
+   Font > Title), separate from body text — applies to every heading tag
+   site-wide (section titles, drama titles, page headings, ...) without
+   needing to add this rule to each component's CSS individually. */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-family-title);
+}
+
+#root {
+  min-height: 100vh;
+}
+
+button {
+  font-family: inherit;
+}
+
+img {
+  max-width: 100%;
+}

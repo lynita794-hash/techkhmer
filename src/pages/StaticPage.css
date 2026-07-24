@@ -1,0 +1,32 @@
+.static-page {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 40px 20px 60px;
+  min-height: 50vh;
+}
+
+.static-page h1 {
+  color: #fff;
+  font-size: 28px;
+  margin: 0 0 20px;
+}
+
+.static-content {
+  color: #9aa0ac;
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+.static-content p {
+  margin: 0 0 14px;
+}
+
+@media (max-width: 480px) {
+  .static-page {
+    padding: 24px 16px 40px;
+  }
+
+  .static-page h1 {
+    font-size: 22px;
+  }
+}

@@ -1,0 +1,219 @@
+.admin-ads h1 {
+  color: #fff;
+  font-size: 20px;
+  margin: 0 0 8px;
+}
+
+.ad-group {
+  margin-bottom: 24px;
+}
+
+.ad-group-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.ad-group h2 {
+  color: #cfd3dc;
+  font-size: 14px;
+  font-weight: 600;
+  margin: 0;
+}
+
+.ad-add-btn {
+  background: #1a1f2e;
+  border: 1px solid #2a3042;
+  color: #cfd3dc;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 7px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.ad-add-btn:hover {
+  border-color: var(--color-primary);
+  color: #fff;
+}
+
+.ad-status-btn {
+  border: 1px solid #2a3042;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  padding: 4px 10px;
+  cursor: pointer;
+  background: #1a1f2e;
+  color: #9aa0ac;
+}
+
+.ad-status-btn.is-on {
+  background: rgba(34, 197, 94, 0.15);
+  border-color: #22c55e;
+  color: #4ade80;
+}
+
+.ad-status-btn.is-off {
+  background: rgba(229, 9, 20, 0.12);
+  border-color: var(--color-primary);
+  color: #ff6b6b;
+}
+
+/* Master ON/OFF switch for the whole Preroll Ad feature — sits in the
+   group header next to the title, like AdminSlider's enable toggle. */
+.ad-status-btn-group {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.preroll-url-cell {
+  max-width: 320px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: 'Courier New', monospace;
+  font-size: 12px;
+}
+
+.preroll-add-btn {
+  margin-top: 12px;
+}
+
+.ad-floating-section-title {
+  color: #fff;
+  font-size: 16px;
+  margin: 28px 0 4px;
+  padding-top: 16px;
+  border-top: 1px solid #232838;
+}
+
+@media (max-width: 640px) {
+  .preroll-url-cell {
+    max-width: 160px;
+  }
+}
+
+.ad-form {
+  background: #12141c;
+  border: 1px solid #232838;
+  border-radius: 8px;
+  padding: 20px;
+  max-width: 640px;
+  margin-top: 12px;
+}
+
+.ad-form h2 {
+  color: #fff;
+  font-size: 15px;
+  margin: 0 0 16px;
+}
+
+.ad-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.ad-form-field {
+  display: block;
+}
+
+.ad-form-field-full {
+  grid-column: 1 / -1;
+}
+
+.ad-form-field span {
+  display: block;
+  color: #9aa0ac;
+  font-size: 12px;
+  margin-bottom: 6px;
+}
+
+.ad-form-field input,
+.ad-form-field select {
+  width: 100%;
+  background: #1a1f2e;
+  border: 1px solid #2a3042;
+  border-radius: 4px;
+  color: #fff;
+  font-size: 13px;
+  padding: 9px 10px;
+  box-sizing: border-box;
+}
+
+.ad-code-textarea {
+  width: 100%;
+  background: #0d0f16;
+  border: 1px solid #2a3042;
+  border-radius: 4px;
+  color: #d5d9e0;
+  font-family: 'Courier New', monospace;
+  font-size: 12px;
+  padding: 10px;
+  box-sizing: border-box;
+  resize: vertical;
+}
+
+.ad-code-textarea:focus,
+.ad-form-field input:focus,
+.ad-form-field select:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+
+.ad-form-checkbox {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #9aa0ac;
+  font-size: 13px;
+}
+
+.ad-form-actions {
+  margin-top: 16px;
+  display: flex;
+  gap: 10px;
+}
+
+.ad-submit-btn {
+  background: var(--color-primary);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 20px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.ad-submit-btn:hover {
+  background: var(--color-primary-hover);
+}
+
+.ad-cancel-btn {
+  background: transparent;
+  border: 1px solid #2a3042;
+  color: #9aa0ac;
+  border-radius: 6px;
+  padding: 10px 20px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.ad-cancel-btn:hover {
+  color: #fff;
+}
+
+@media (max-width: 640px) {
+  .ad-form-grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,47 @@
+.comments-search-input {
+  width: 100%;
+  max-width: 420px;
+  background: #1a1f2e;
+  border: 1px solid #2a3042;
+  border-radius: 6px;
+  color: #fff;
+  font-size: 13px;
+  padding: 9px 12px;
+  box-sizing: border-box;
+  margin-bottom: 16px;
+  display: block;
+}
+
+.comments-search-input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+
+.comment-drama-cell a {
+  color: #4da3ff;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.comment-drama-cell a:hover {
+  text-decoration: underline;
+}
+
+.comment-content-cell {
+  max-width: 420px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.comment-date-cell {
+  color: #9aa0ac;
+  white-space: nowrap;
+  font-size: 12px;
+}
+
+@media (max-width: 640px) {
+  .comment-content-cell {
+    max-width: 200px;
+  }
+}

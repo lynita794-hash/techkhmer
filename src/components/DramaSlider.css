@@ -1,0 +1,86 @@
+.drama-slider {
+  position: relative;
+  max-width: var(--site-max-width);
+  margin: 0 auto;
+  padding: 24px 20px 10px;
+}
+
+.drama-slider-track {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  scrollbar-width: none;
+}
+
+.drama-slider-track::-webkit-scrollbar {
+  display: none;
+}
+
+.drama-slider-item {
+  /* Matches DramaGrid's --grid-columns setting at desktop width, so
+     Slider mode and Grid mode always show the same number of posters
+     per row for a given section, whatever the admin has configured. */
+  flex: 0 0 calc((100% - (var(--grid-columns, 6) - 1) * 16px) / var(--grid-columns, 6));
+  min-width: 0;
+  scroll-snap-align: start;
+}
+
+.drama-slider-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(13, 13, 13, 0.7);
+  color: #fff;
+  border: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+
+.drama-slider-arrow:hover {
+  background: rgba(13, 13, 13, 0.95);
+}
+
+.drama-slider-prev {
+  left: -4px;
+}
+
+.drama-slider-next {
+  right: -4px;
+}
+
+@media (max-width: 1100px) {
+  .drama-slider-item {
+    flex-basis: calc((100% - 3 * 16px) / 4);
+  }
+}
+
+@media (max-width: 700px) {
+  .drama-slider-item {
+    flex-basis: calc((100% - 2 * 10px) / 3);
+  }
+
+  .drama-slider-track {
+    gap: 10px;
+  }
+
+  .drama-slider-arrow {
+    width: 30px;
+    height: 30px;
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 460px) {
+  .drama-slider-item {
+    flex-basis: calc((100% - 10px) / 2);
+  }
+}

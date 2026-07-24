@@ -1,0 +1,30 @@
+.type-filter {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  max-width: var(--site-max-width);
+  margin: 0 auto;
+  padding: 4px 20px 0;
+}
+
+.type-filter-btn {
+  background: transparent;
+  border: 1px solid #2a2a2a;
+  color: #b3b3b3;
+  font-size: 13px;
+  padding: 6px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.type-filter-btn:hover {
+  color: #fff;
+  border-color: #444;
+}
+
+.type-filter-btn.active {
+  color: #fff;
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+}

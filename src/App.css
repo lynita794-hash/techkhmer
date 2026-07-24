@@ -1,0 +1,14 @@
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+}
+
+.admin-lazy-loading {
+  min-height: 100vh;
+  background: #0d0d0d;
+}

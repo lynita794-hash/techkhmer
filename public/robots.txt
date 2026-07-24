@@ -1,0 +1,10 @@
+# NOTE: If you set VITE_ADMIN_PATH in .env to move the Admin Panel off
+# the default /admin path, update the two Disallow lines below to match
+# — this file is static and does not pick up that env var automatically.
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /admin/
+
+Sitemap: /sitemap.xml
+Sitemap: /sitemap-video.xml

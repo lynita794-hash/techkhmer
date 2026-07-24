@@ -1,0 +1,23 @@
+.watchlist-page {
+  max-width: var(--site-max-width);
+  margin: 0 auto;
+  padding: 24px 20px 60px;
+  min-height: 50vh;
+}
+
+.watchlist-page h1 {
+  color: #fff;
+  font-size: 22px;
+  margin: 0 0 20px;
+}
+
+.watchlist-page .drama-grid {
+  padding: 0;
+}
+
+.watchlist-empty {
+  color: #999;
+  text-align: center;
+  padding: 60px 20px;
+  font-size: 15px;
+}

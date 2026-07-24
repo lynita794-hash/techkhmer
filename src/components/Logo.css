@@ -1,0 +1,22 @@
+.site-logo-img {
+  height: 32px;
+  width: auto;
+  display: block;
+  object-fit: contain;
+}
+
+.site-logo-text {
+  font-size: 22px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+  display: inline-flex;
+}
+
+.logo-white {
+  color: #fff;
+}
+
+.logo-accent {
+  color: var(--color-primary);
+}

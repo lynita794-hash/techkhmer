@@ -1,0 +1,22 @@
+.ad-slot {
+  max-width: var(--site-max-width);
+  margin: 0 auto;
+  padding: 16px 20px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.ad-unit {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.ad-unit img,
+.ad-unit iframe {
+  max-width: 100%;
+  height: auto;
+}

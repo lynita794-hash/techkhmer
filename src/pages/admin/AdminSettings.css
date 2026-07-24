@@ -1,0 +1,517 @@
+.admin-settings h1 {
+  color: #fff;
+  font-size: 20px;
+  margin: 0 0 16px;
+}
+
+/* --- Tab bar: groups settings so the page isn't one long scroll --- */
+.settings-tabs {
+  display: flex;
+  gap: 4px;
+  border-bottom: 1px solid #232838;
+  margin-bottom: 20px;
+  overflow-x: auto;
+}
+
+.settings-tab-btn {
+  background: transparent;
+  border: none;
+  color: #9aa0ac;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 10px 16px;
+  cursor: pointer;
+  white-space: nowrap;
+  border-bottom: 2px solid transparent;
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.settings-tab-btn:hover {
+  color: #cfd3dc;
+}
+
+.settings-tab-btn.is-active {
+  color: #fff;
+  border-bottom-color: var(--color-primary);
+}
+
+.settings-section {
+  background: #12141c;
+  border: 1px solid #232838;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+  max-width: 640px;
+}
+
+.settings-section h2 {
+  color: #fff;
+  font-size: 15px;
+  margin: 0 0 16px;
+}
+
+/* Label sits on the left, the input/control sits on the right on the
+   same row (left-to-right layout) whenever there's room. Falls back to
+   stacked (label above control) for multi-line textareas and on narrow
+   screens, since a wide textarea squeezed into half a row is unusable. */
+.settings-field {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.settings-field > span:first-child {
+  flex: 0 0 190px;
+  color: #9aa0ac;
+  font-size: 12px;
+  padding-top: 9px;
+  margin-bottom: 0;
+}
+
+.settings-field > *:nth-child(2) {
+  flex: 1;
+  min-width: 0;
+}
+
+.settings-field input,
+.settings-field textarea {
+  width: 100%;
+  background: #1a1f2e;
+  border: 1px solid #2a3042;
+  border-radius: 4px;
+  color: #fff;
+  font-size: 13px;
+  padding: 9px 10px;
+  box-sizing: border-box;
+  font-family: inherit;
+}
+
+.settings-field input:focus,
+.settings-field textarea:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+
+.settings-field:has(> textarea) {
+  flex-direction: column;
+}
+
+.settings-field:has(> textarea) > span:first-child {
+  flex: initial;
+  padding-top: 0;
+  margin-bottom: 6px;
+}
+
+/* Opt-out for fields with more than a label+control pair (e.g. Logo,
+   which also shows an image preview below the upload row). */
+.settings-field-stack {
+  flex-direction: column;
+}
+
+.settings-field-stack > span:first-child {
+  flex: initial;
+  padding-top: 0;
+  margin-bottom: 6px;
+}
+
+@media (max-width: 640px) {
+  .settings-field {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .settings-field > span:first-child {
+    flex: initial;
+    padding-top: 0;
+    margin-bottom: 6px;
+  }
+}
+
+/* Custom CSS box needs more room than the other sections to comfortably
+   read/write code. */
+.settings-section-wide {
+  max-width: 780px;
+}
+
+.custom-css-textarea {
+  font-family: ui-monospace, 'Cascadia Code', Consolas, monospace;
+  font-size: 12.5px;
+  line-height: 1.6;
+  resize: vertical;
+  min-height: 180px;
+  tab-size: 2;
+}
+
+.logo-upload-row {
+  display: flex;
+  gap: 8px;
+}
+
+.logo-upload-row input {
+  flex: 1;
+}
+
+.upload-btn {
+  background: #1a1f2e;
+  border: 1px solid #2a3042;
+  color: #cfd3dc;
+  font-size: 12px;
+  padding: 9px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: center;
+}
+
+.upload-btn:hover {
+  background: #232838;
+}
+
+.logo-preview {
+  margin-top: 10px;
+  height: 40px;
+  object-fit: contain;
+}
+
+.settings-submit-btn {
+  background: var(--color-primary);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 20px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.settings-submit-btn:hover:not(:disabled) {
+  background: var(--color-primary-hover);
+}
+
+.settings-submit-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.settings-form-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.settings-reset-btn {
+  background: transparent;
+  border: 1px solid #2a3042;
+  color: #9aa0ac;
+  border-radius: 6px;
+  padding: 10px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.settings-reset-btn:hover:not(:disabled) {
+  border-color: var(--color-primary);
+  color: #fff;
+}
+
+.settings-reset-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.settings-hint {
+  color: #9aa0ac;
+  font-size: 12px;
+  margin: 0 0 16px;
+  line-height: 1.6;
+}
+
+.settings-hint a {
+  color: #4da3ff;
+  text-decoration: none;
+}
+
+.settings-hint a:hover {
+  text-decoration: underline;
+}
+
+.font-preview {
+  background: #1a1f2e;
+  border: 1px solid #2a3042;
+  border-radius: 6px;
+  color: #fff;
+  font-size: 18px;
+  padding: 14px 16px;
+  margin: 0 0 14px;
+}
+
+.tmdb-key-row {
+  display: flex;
+  gap: 8px;
+}
+
+.tmdb-key-row input {
+  flex: 1;
+}
+
+.tmdb-key-toggle-btn {
+  background: #1a1f2e;
+  border: 1px solid #2a3042;
+  color: #cfd3dc;
+  font-size: 12px;
+  padding: 9px 14px;
+  border-radius: 4px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.tmdb-key-toggle-btn:hover {
+  background: #232838;
+  color: #fff;
+}
+
+.backup-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.import-btn {
+  padding: 10px 16px;
+}
+
+.import-confirm-box {
+  margin-top: 16px;
+  background: rgba(229, 9, 20, 0.08);
+  border: 1px solid rgba(229, 9, 20, 0.4);
+  border-radius: 6px;
+  padding: 14px;
+}
+
+.import-warning {
+  color: #ff9b9b;
+  font-size: 12px;
+  line-height: 1.6;
+  margin: 0 0 12px;
+}
+
+.import-confirm-actions {
+  display: flex;
+  gap: 8px;
+}
+
+/* --- Full-site theme presets --- */
+.theme-preset-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.theme-preset-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #1a1f2e;
+  border: 1px solid #2a3042;
+  border-radius: 6px;
+  padding: 8px 14px;
+  color: #cfd3dc;
+  font-size: 13px;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.theme-preset-btn:hover:not(:disabled) {
+  border-color: var(--color-primary);
+  background: #1f2536;
+  color: #fff;
+}
+
+.theme-preset-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.theme-preset-swatch {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+/* --- Custom Color pickers --- */
+/* Grid instead of one-per-line: fields flow left-to-right and wrap to a
+   new row once they run out of horizontal space. */
+.color-field-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.color-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.color-field-swatch-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.color-field-swatch-row input[type='color'] {
+  width: 44px;
+  height: 36px;
+  padding: 0;
+  border: 1px solid #2a3042;
+  border-radius: 4px;
+  background: transparent;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.color-hex-input {
+  flex: 1;
+  max-width: 160px;
+  background: #1a1f2e;
+  border: 1px solid #2a3042;
+  border-radius: 4px;
+  color: #fff;
+  font-size: 13px;
+  font-family: ui-monospace, Consolas, monospace;
+  padding: 8px 10px;
+  box-sizing: border-box;
+}
+
+.color-hex-input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+
+.color-field span {
+  color: #9aa0ac;
+  font-size: 12px;
+}
+
+/* --- Footer/Security section ON/OFF toggle list --- */
+/* Same left-to-right grid pattern as color pickers: two toggle rows can
+   sit side by side instead of each eating a full row. */
+.footer-toggle-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.footer-toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  background: #1a1f2e;
+  border: 1px solid #2a3042;
+  border-radius: 6px;
+  padding: 10px 14px;
+}
+
+.footer-toggle-row span {
+  color: #cfd3dc;
+  font-size: 13px;
+}
+
+.footer-toggle-buttons {
+  flex-shrink: 0;
+  width: 140px;
+}
+
+/* Reuse the ON/OFF pill styling from AdminDramaForm.css */
+.footer-toggle-buttons .status-toggle-btn {
+  flex: 1;
+  background: #12141c;
+  border: 1px solid #2a3042;
+  color: #9aa0ac;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  padding: 7px 0;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+}
+
+.footer-toggle-buttons .status-toggle-btn:hover {
+  background: #232838;
+  color: #cfd3dc;
+}
+
+.footer-toggle-buttons .status-toggle-btn.is-on {
+  background: rgba(34, 197, 94, 0.15);
+  border-color: #22c55e;
+  color: #4ade80;
+}
+
+.footer-toggle-buttons .status-toggle-btn.is-off {
+  background: rgba(229, 9, 20, 0.12);
+  border-color: var(--color-primary);
+  color: #ff6b6b;
+}
+
+@media (max-width: 640px) {
+  .footer-toggle-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 8px;
+  }
+
+  .footer-toggle-buttons {
+    width: 100%;
+  }
+}
+
+.twofactor-qr {
+  display: block;
+  width: 200px;
+  height: 200px;
+  margin: 12px 0;
+  border-radius: 6px;
+  background: #fff;
+  padding: 8px;
+}
+
+.site-width-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.site-width-slider {
+  flex: 1;
+  accent-color: var(--color-primary);
+}
+
+.site-width-number {
+  width: 84px;
+  background: #1a1f2e;
+  border: 1px solid #2a3042;
+  border-radius: 4px;
+  color: #fff;
+  font-size: 14px;
+  padding: 8px 10px;
+}
+
+.site-width-number:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+
+.site-width-unit {
+  color: #9aa0ac;
+  font-size: 13px;
+}

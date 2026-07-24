@@ -1,0 +1,327 @@
+.episode-list {
+  background: #12141c;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.episode-list-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 14px;
+  background: #181b26;
+  border-bottom: 1px solid #232838;
+  color: #cfd3dc;
+}
+
+.episode-sort-btn {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  background: transparent;
+  border: 1px solid #2a3042;
+  border-radius: 4px;
+  color: #9aa0ac;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.episode-sort-btn:hover {
+  background: #1a1f2e;
+  color: #fff;
+  border-color: var(--color-primary);
+}
+
+.episode-title {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.episode-count {
+  color: #6c7280;
+  font-weight: 400;
+}
+
+.episode-list-filters {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px 12px;
+  border-bottom: 1px solid #232838;
+}
+
+.episode-search {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #1a1f2e;
+  border: 1px solid #2a3042;
+  border-radius: 4px;
+  padding: 5px 8px;
+  color: #6c7280;
+}
+
+.episode-search input {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #cfd3dc;
+  font-size: 12px;
+  width: 100%;
+}
+
+.episode-search input::placeholder {
+  color: #5a6070;
+}
+
+.episode-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  padding: 16px;
+  align-content: flex-start;
+  /* Scrollable playlist: header + search stay fixed (see .episode-list's
+     flex-column layout), only the episode grid itself scrolls once it
+     grows taller than the available space — previously the parent's
+     overflow: hidden just clipped extra episodes with no way to reach
+     them for dramas with many episodes. min-height: 0 is required for a
+     flex child to actually shrink below its content size instead of
+     forcing the whole sidebar taller. */
+  flex: 1;
+  min-height: 0;
+  overflow-y: scroll;
+  /* Firefox's scrollbar styling API — the ::-webkit-scrollbar rules below
+     only apply to Chromium/Safari, so without this Firefox falls back to
+     its native (light-colored, chunky) scrollbar which clashes with the
+     dark player UI. */
+  scrollbar-width: thin;
+  scrollbar-color: #3a4258 transparent;
+}
+
+/* Thin, dark-themed scrollbar for the playlist — matches the rest of the
+   app's chrome instead of the browser's bulky default scrollbar.
+   overflow-y: scroll (above) instead of auto keeps the track reserved/
+   visible at all times rather than only appearing on hover/scroll,
+   which is what made it easy to miss before. */
+.episode-grid::-webkit-scrollbar {
+  width: 8px;
+}
+
+.episode-grid::-webkit-scrollbar-track {
+  background: #0d0f16;
+  border-radius: 4px;
+}
+
+.episode-grid::-webkit-scrollbar-thumb {
+  background: #3a4258;
+  border-radius: 4px;
+  border: 2px solid #0d0f16;
+}
+
+.episode-grid::-webkit-scrollbar-thumb:hover {
+  background: #4a5470;
+}
+
+/* Without this, Chromium falls back to the OS's classic scrollbar with
+   up/down arrow buttons when Windows has "always show scrollbars"
+   enabled — that's what overrides the custom thin thumb/track above
+   and shows the chunky native-looking scrollbar instead. */
+.episode-grid::-webkit-scrollbar-button {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+.episode-btn {
+  position: relative;
+  /* Width derived from --episode-columns (Desktop) so N buttons fit
+     exactly per row regardless of the sidebar's actual pixel width —
+     same approach DramaSlider.css uses for --grid-columns. Admins pick N
+     from Settings > រូបរាង (ចំនួន Column Episode). Mobile/tablet swaps
+     to --episode-columns-mobile below. */
+  width: calc((100% - (var(--episode-columns, 5) - 1) * 14px) / var(--episode-columns, 5));
+  aspect-ratio: 1;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  padding: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background: #17181d;
+  flex-shrink: 0;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.06);
+  transition: background 0.15s, box-shadow 0.15s;
+}
+
+.episode-btn:hover {
+  background: #202126;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.14);
+}
+
+/* Currently-playing episode: the number area gets a lighter fill so it
+   reads as "open right now" — the footer strip's color (orange/red)
+   stays tied to subtitle/END status regardless of which episode is
+   active, matching the reference design where every episode's footer
+   communicates the same thing independent of selection. */
+.episode-btn.active .episode-num {
+  background: #2b2d34;
+}
+
+.episode-btn.active:hover .episode-num {
+  background: #33353d;
+}
+
+/* "Continue watching" episode (not the one currently active) gets a
+   thin accent-colored ring instead of a filled background — a lighter
+   -weight cue than the active state. */
+.episode-btn.continue {
+  box-shadow: 0 0 0 2px var(--color-playlist-btn, #f7941d);
+}
+
+/* Watched episodes are dimmed (already-seen content shouldn't visually
+   compete with what's still new), matching the "watched" convention
+   used by Netflix/Viki-style playlists. */
+.episode-btn.watched .episode-num {
+  color: #6c7280;
+}
+
+.episode-watched-check {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  color: #4ade80;
+  background: #0d0d0d;
+  border-radius: 50%;
+  padding: 1px;
+  z-index: 1;
+}
+
+
+
+.episode-empty {
+  color: #6c7280;
+  font-size: 13px;
+  padding: 10px 0;
+}
+
+/* Sidebar becomes a full-width block below the video on mobile/tablet
+   (see WatchPage.css) — buttons don't need to be as large as on desktop,
+   where they sit in a narrow 300px column and benefit from bigger tap
+   targets. Slightly smaller + tighter spacing here fits more per row
+   without feeling cramped. */
+@media (max-width: 860px) {
+  .episode-grid {
+    justify-content: flex-start;
+    gap: 8px;
+    padding: 12px;
+  }
+
+  /* Switches to --episode-columns-mobile (separate admin setting from
+     desktop) once the sidebar becomes a full-width block below the
+     video — same calc() approach, just a different variable/gap. */
+  .episode-btn {
+    width: calc(
+      (100% - (var(--episode-columns-mobile, 6) - 1) * 8px) / var(--episode-columns-mobile, 6)
+    );
+  }
+
+  .episode-num {
+    font-size: calc(15px * var(--episode-button-scale, 1));
+  }
+}
+
+/* Most modern phones (390–430px wide) fall in this range too — without
+   this breakpoint they'd get the same size as a tablet in landscape,
+   which is too big for a screen this narrow and causes awkward wrapping. */
+@media (max-width: 480px) {
+  .episode-grid {
+    gap: 8px;
+    padding: 12px;
+  }
+
+  .episode-btn {
+    width: calc(
+      (100% - (var(--episode-columns-mobile, 6) - 1) * 8px) / var(--episode-columns-mobile, 6)
+    );
+    border-radius: 4px;
+  }
+
+  .episode-num {
+    font-size: calc(14px * var(--episode-button-scale, 1));
+  }
+
+  .episode-footer {
+    font-size: calc(9px * var(--episode-button-scale, 1));
+    padding: 2px 0;
+  }
+
+  .episode-cc-tag {
+    font-size: calc(8px * var(--episode-button-scale, 1));
+  }
+}
+
+.episode-num {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  color: #fff;
+  /* Admin-controlled size multiplier (Admin Panel > Playlist > ទំហំ
+     ប៊ូតុង Episode) — scales the number/footer text without touching
+     the button's own width (still driven purely by --episode-columns),
+     so the grid math/column count stays intact regardless of size. */
+  font-size: calc(17px * var(--episode-button-scale, 1));
+  font-weight: 700;
+}
+
+/* Bottom footer strip — a solid-color bar spanning the full button
+   width, sitting flush at the bottom. Color/label depends on the
+   episode's state: END (series finale) takes priority over NEW, which
+   takes priority over the default CC/SUB tag. */
+.episode-footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  font-size: calc(10px * var(--episode-button-scale, 1));
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  color: #fff;
+  padding: 3px 0;
+  flex-shrink: 0;
+}
+
+.episode-footer-sub {
+  background: #f7941d;
+}
+
+.episode-footer-end {
+  background: var(--color-end-badge, #e5342b);
+}
+
+.episode-footer-new {
+  background: var(--color-new-badge, #22c55e);
+  color: #0d1a10;
+}
+
+/* The "CC" mini-tag inside the SUB footer — a small pill with its own
+   slightly darker background so it stands out against the orange strip,
+   matching the reference image's two-part "CC SUB" footer. */
+.episode-cc-tag {
+  background: rgba(0, 0, 0, 0.25);
+  border-radius: 2px;
+  padding: 0 3px;
+  font-size: calc(9px * var(--episode-button-scale, 1));
+  font-weight: 800;
+  line-height: 1.4;
+}
+
+

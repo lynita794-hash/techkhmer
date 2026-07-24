@@ -1,0 +1,94 @@
+name: Deploy to VPS
+
+# Runs on every push to main, or manually from the Actions tab.
+# Builds the React frontend, then rsyncs:
+#   - dist/ contents  -> htdocs/techkhmer.org  (static site root)
+#   - server/ code    -> a separate folder OUTSIDE htdocs (never publicly served)
+# then restarts the backend via PM2.
+#
+# IMPORTANT — required GitHub repo secrets (Settings > Secrets and
+# variables > Actions):
+#   DEPLOY_SSH_HOST      e.g. 123.45.67.89 or techkhmer.org
+#   DEPLOY_SSH_USER      the CloudPanel site's SSH user (NOT root)
+#   DEPLOY_SSH_KEY        private key (PEM) matching a public key already
+#                         added to that user's ~/.ssh/authorized_keys
+#   DEPLOY_SSH_PORT      optional, defaults to 22
+#   DEPLOY_HTDOCS_PATH   e.g. /home/techkhmer/htdocs/techkhmer.org
+#   DEPLOY_SERVER_PATH   e.g. /home/techkhmer/dramatv-server/server
+#                         (must be OUTSIDE htdocs — see CLOUDPANEL_STATIC_FIX.md)
+#
+# Never commit server/.env — it's created once by hand on the VPS
+# (step 4 of CLOUDPANEL_STATIC_FIX.md) and is excluded from every rsync
+# below, so deploys never touch or overwrite it.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch: {}
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install frontend dependencies
+        run: npm ci
+
+      - name: Build frontend
+        run: npm run build
+
+      - name: Setup SSH agent
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.DEPLOY_SSH_KEY }}
+
+      - name: Trust remote host key
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -p ${{ secrets.DEPLOY_SSH_PORT || 22 }} ${{ secrets.DEPLOY_SSH_HOST }} >> ~/.ssh/known_hosts
+
+      # --delete removes anything in htdocs that isn't part of the fresh
+      # build — this also cleans up any stray source folders (src/,
+      # server/, config/, routes/) that may have ended up there before.
+      - name: Sync frontend build to htdocs
+        run: |
+          rsync -avz --delete \
+            -e "ssh -p ${{ secrets.DEPLOY_SSH_PORT || 22 }}" \
+            ./dist/ \
+            ${{ secrets.DEPLOY_SSH_USER }}@${{ secrets.DEPLOY_SSH_HOST }}:${{ secrets.DEPLOY_HTDOCS_PATH }}/
+
+      # No --delete here: .env, data.sqlite*, and uploads/ live only on
+      # the VPS (never in git), so a destructive sync would wipe them.
+      - name: Sync backend code (outside htdocs)
+        run: |
+          rsync -avz \
+            --exclude 'node_modules' \
+            --exclude '.env' \
+            --exclude 'data.sqlite' \
+            --exclude 'data.sqlite-*' \
+            --exclude 'uploads' \
+            -e "ssh -p ${{ secrets.DEPLOY_SSH_PORT || 22 }}" \
+            ./server/ \
+            ${{ secrets.DEPLOY_SSH_USER }}@${{ secrets.DEPLOY_SSH_HOST }}:${{ secrets.DEPLOY_SERVER_PATH }}/
+
+      - name: Install backend deps & restart PM2
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.DEPLOY_SSH_HOST }}
+          username: ${{ secrets.DEPLOY_SSH_USER }}
+          key: ${{ secrets.DEPLOY_SSH_KEY }}
+          port: ${{ secrets.DEPLOY_SSH_PORT || 22 }}
+          script: |
+            set -e
+            cd "${{ secrets.DEPLOY_SERVER_PATH }}"
+            npm install --omit=dev
+            pm2 restart dramatv-api || pm2 start ecosystem.config.cjs
+            pm2 save

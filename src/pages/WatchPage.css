@@ -1,0 +1,138 @@
+.watch-page {
+  position: relative;
+  min-height: 100vh;
+  background: #0d0d0d;
+}
+
+.watch-backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 520px;
+  background-size: cover;
+  background-position: center;
+  filter: blur(40px) brightness(0.6);
+  transform: scale(1.1);
+  z-index: 0;
+  pointer-events: none;
+}
+
+.watch-backdrop::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(13, 13, 13, 0.3) 0%, #0d0d0d 100%);
+}
+
+.watch-page > .navbar,
+.watch-page > .watch-layout,
+.watch-page > .drama-info,
+.watch-page > .related-dramas,
+.watch-page > .site-footer {
+  position: relative;
+  z-index: 1;
+}
+
+.watch-layout {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 16px;
+  max-width: var(--site-max-width);
+  margin: 0 auto;
+  padding: 20px 20px 0;
+}
+
+/* Movies have no episode playlist — the video player takes the full width. */
+.watch-layout-single {
+  grid-template-columns: 1fr;
+}
+
+.watch-main {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Positioning anchor for OverlayPlayerAd, which sits absolutely on top
+   of the video player itself (see OverlayPlayerAd.css). */
+.watch-player-wrap {
+  position: relative;
+}
+
+.watch-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 0;
+}
+
+.not-found {
+  color: #999;
+  text-align: center;
+  padding: 60px 20px;
+}
+
+/* --- Server switch row: shown under the player only when an episode has
+   more than one mirror server, so single-source episodes stay unchanged. --- */
+.server-switch-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.server-switch-label {
+  color: #9aa0ac;
+  font-size: 13px;
+}
+
+.server-switch-btn {
+  background: #1a1f2e;
+  border: 1px solid #2a3042;
+  color: #cfd3dc;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 14px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.server-switch-btn:hover {
+  background: #232838;
+  color: #fff;
+}
+
+.server-switch-btn.is-active {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: #fff;
+}
+
+@media (max-width: 860px) {
+  .watch-layout {
+    grid-template-columns: 1fr;
+    padding: 12px 12px 0;
+    gap: 12px;
+  }
+
+  /* Cap the whole playlist card's height on mobile/tablet instead of
+     letting it grow with the episode count — the header/search stay
+     visible and only .episode-grid itself scrolls (see EpisodeList.css),
+     same behavior as desktop, just at a shorter fixed height. */
+  .episode-list {
+    height: 320px;
+  }
+}
+
+@media (max-width: 480px) {
+  .watch-layout {
+    padding: 8px 8px 0;
+    gap: 8px;
+  }
+
+  .video-player {
+    border-radius: 0;
+  }
+}

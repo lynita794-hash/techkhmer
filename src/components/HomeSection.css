@@ -1,0 +1,50 @@
+.home-section {
+  max-width: var(--site-max-width);
+  margin: 0 auto;
+}
+
+.home-section-header {
+  padding: 24px 20px 0;
+}
+
+.home-section-title-link {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  text-decoration: none;
+}
+
+.home-section-title-link h2 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: var(--color-heading);
+}
+
+@media (max-width: 460px) {
+  .home-section-header {
+    padding: 18px 12px 0;
+  }
+
+  .home-section-title-link h2 {
+    font-size: 16px;
+  }
+}
+
+.home-section-title-link h2::first-letter {
+  color: var(--color-primary);
+  text-decoration: underline;
+}
+
+.home-section-arrow {
+  color: var(--color-primary);
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.home-section-title-link:hover h2,
+.home-section-title-link:hover .home-section-arrow {
+  opacity: 0.8;
+}

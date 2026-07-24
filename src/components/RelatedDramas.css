@@ -1,0 +1,24 @@
+.related-dramas {
+  max-width: var(--site-max-width);
+  margin: 0 auto;
+}
+
+.related-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px 0;
+  color: #cfd3dc;
+}
+
+.related-header h2 {
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  margin: 0;
+  color: var(--color-heading);
+}
+
+.related-dramas .drama-grid {
+  padding: 16px 20px 60px;
+}

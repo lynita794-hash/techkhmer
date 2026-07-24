@@ -1,0 +1,36 @@
+.drama-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px 8px;
+  max-width: var(--site-max-width);
+  margin: 0 auto;
+  padding: 20px 12px 40px;
+}
+
+.drama-empty {
+  text-align: center;
+  color: #999;
+  padding: 60px 20px;
+  font-size: 16px;
+}
+
+@media (min-width: 461px) {
+  .drama-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px 10px;
+  }
+}
+
+@media (min-width: 701px) {
+  .drama-grid {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px 16px;
+    padding: 24px 20px 10px;
+  }
+}
+
+@media (min-width: 1101px) {
+  .drama-grid {
+    grid-template-columns: repeat(var(--grid-columns, 6), 1fr);
+  }
+}
