@@ -50,20 +50,33 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.DEPLOY_SSH_KEY }}
 
+      # Secrets are re-exported here through `tr -d '\r\n'` — pasting a
+      # secret value from a browser can silently include a trailing
+      # newline, which would otherwise break the multi-line commands
+      # below (a stray newline mid-command turns the rest of the line
+      # into a separate, invalid command — "No such file or directory").
+      # Trimming here means the workflow keeps working even if a secret
+      # has extra whitespace, instead of failing confusingly.
+      - name: Load & sanitize deploy secrets
+        run: |
+          {
+            echo "SSH_HOST=$(printf '%s' "${{ secrets.DEPLOY_SSH_HOST }}" | tr -d '\r\n ')"
+            echo "SSH_USER=$(printf '%s' "${{ secrets.DEPLOY_SSH_USER }}" | tr -d '\r\n ')"
+            echo "SSH_PORT=$(printf '%s' "${{ secrets.DEPLOY_SSH_PORT }}" | tr -d '\r\n ')"
+            echo "HTDOCS_PATH=$(printf '%s' "${{ secrets.DEPLOY_HTDOCS_PATH }}" | tr -d '\r\n ')"
+            echo "SERVER_PATH=$(printf '%s' "${{ secrets.DEPLOY_SERVER_PATH }}" | tr -d '\r\n ')"
+          } >> "$GITHUB_ENV"
+
       - name: Trust remote host key
         run: |
           mkdir -p ~/.ssh
-          ssh-keyscan -p ${{ secrets.DEPLOY_SSH_PORT || 22 }} ${{ secrets.DEPLOY_SSH_HOST }} >> ~/.ssh/known_hosts
+          ssh-keyscan -p "${SSH_PORT:-22}" "$SSH_HOST" >> ~/.ssh/known_hosts
 
       # --delete removes anything in htdocs that isn't part of the fresh
       # build — this also cleans up any stray source folders (src/,
       # server/, config/, routes/) that may have ended up there before.
       - name: Sync frontend build to htdocs
-        run: |
-          rsync -avz --delete \
-            -e "ssh -p ${{ secrets.DEPLOY_SSH_PORT || 22 }}" \
-            ./dist/ \
-            ${{ secrets.DEPLOY_SSH_USER }}@${{ secrets.DEPLOY_SSH_HOST }}:${{ secrets.DEPLOY_HTDOCS_PATH }}/
+        run: rsync -avz --delete -e "ssh -p ${SSH_PORT:-22}" ./dist/ "$SSH_USER@$SSH_HOST:$HTDOCS_PATH/"
 
       # No --delete here: .env, data.sqlite*, and uploads/ live only on
       # the VPS (never in git), so a destructive sync would wipe them.
@@ -75,9 +88,8 @@ jobs:
             --exclude 'data.sqlite' \
             --exclude 'data.sqlite-*' \
             --exclude 'uploads' \
-            -e "ssh -p ${{ secrets.DEPLOY_SSH_PORT || 22 }}" \
-            ./server/ \
-            ${{ secrets.DEPLOY_SSH_USER }}@${{ secrets.DEPLOY_SSH_HOST }}:${{ secrets.DEPLOY_SERVER_PATH }}/
+            -e "ssh -p ${SSH_PORT:-22}" \
+            ./server/ "$SSH_USER@$SSH_HOST:$SERVER_PATH/"
 
       - name: Install backend deps & restart PM2
         uses: appleboy/ssh-action@v1.2.0
