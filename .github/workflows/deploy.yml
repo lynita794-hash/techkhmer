@@ -81,17 +81,23 @@ jobs:
           # that's the real failure signal, not ssh-keyscan's exit code.
           test -s ~/.ssh/known_hosts
 
-      # --delete removes anything in htdocs that isn't part of the fresh
-      # build — this also cleans up any stray source folders (src/,
-      # server/, config/, routes/) that may have ended up there before.
+      # -rlptz (NOT -a/-avz): archive mode (-a) implies preserving owner
+      # and group (-o -g), which requires either root or already owning
+      # the remote files — since the SSH deploy user isn't the same
+      # user that owns the existing htdocs files, rsync would copy every
+      # file's content fine but fail to chown/chgrp them, exiting with
+      # "some files/attrs were not transferred (code 23)" even though
+      # nothing was actually lost. Dropping -o/-g (owner/group) avoids
+      # that class of failure entirely; -rlptz keeps recursion, symlinks,
+      # permissions, timestamps, and compression.
       - name: Sync frontend build to htdocs
-        run: rsync -avz --delete -e "ssh -p ${SSH_PORT:-22}" ./dist/ "$SSH_USER@$SSH_HOST:$HTDOCS_PATH/"
+        run: rsync -rlptzv --delete -e "ssh -p ${SSH_PORT:-22}" ./dist/ "$SSH_USER@$SSH_HOST:$HTDOCS_PATH/"
 
       # No --delete here: .env, data.sqlite*, and uploads/ live only on
       # the VPS (never in git), so a destructive sync would wipe them.
       - name: Sync backend code (outside htdocs)
         run: |
-          rsync -avz \
+          rsync -rlptzv \
             --exclude 'node_modules' \
             --exclude '.env' \
             --exclude 'data.sqlite' \
