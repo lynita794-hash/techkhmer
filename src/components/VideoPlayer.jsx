@@ -245,7 +245,6 @@ function VideoPlayer({
   src,
   poster,
   subtitles = [],
-  hasSubtitle = true,
   onProgress,
   initialPosition = 0,
   hasNext = false,

@@ -307,7 +307,6 @@ function WatchPage() {
                   src={currentVideoUrl}
                   poster={drama.backdrop || drama.poster}
                   subtitles={episode.subtitles}
-                  hasSubtitle={drama.hasSubtitle}
                   onProgress={handlePlayerProgress}
                   initialPosition={resumePosition}
                   hasNext={hasNext}

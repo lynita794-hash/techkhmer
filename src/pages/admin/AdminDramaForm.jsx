@@ -7,7 +7,6 @@ import {
   deleteSlide,
   fetchCategories,
   fetchDrama,
-  fetchSlides,
   updateDrama,
   updateSlide,
   uploadPoster,
